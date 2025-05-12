@@ -1,13 +1,15 @@
-import { getBookRating } from "./api.js";
+import { getBookRating, addBookToProfile } from "./api.js";
 
 const BASE_URL = "http://localhost:1337";
 
 document.addEventListener("DOMContentLoaded", () => {
     isLoggedIn();
+    //document.querySelector('.logout-button').addEventListener('click', logOut);
+    document.querySelector('.logout-button').addEventListener('click', addBookToProfile);
 });
 
 const isLoggedIn = () => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("token");
     const username = localStorage.getItem("user");
     if (!token) {
         alert("Please log in before accessing the site")
@@ -17,14 +19,16 @@ const isLoggedIn = () => {
     }
 }
 
-const logOut = () => {
-    localStorage.removeItem("jwt");
+
+
+function logOut() {
+    localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "login.html";
 };
 
 function fetchBooks() {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("token");
     fetch("http://localhost:1337/api/books?populate=*", {
         method: "GET",
         headers: {
@@ -45,12 +49,25 @@ function fetchBooks() {
         });
 }
 
-function displayBooks(books) {
+async function displayBooks(books) {
     const bookContainer = document.getElementById("book-container");
-    bookContainer.innerHTML = ""
-    books.forEach(book => {
-        let test = getBookRating(book.id)
-        console.log(book.id)
+    bookContainer.innerHTML = "";
+
+    for (let book of books) {
+        let totalRate = 0;
+        let ratingText = "No ratings"
+        const ratings = await getBookRating(book.documentId);
+        console.log(ratings);
+
+        for (let rating of ratings) {
+            totalRate += rating.rating;
+        }
+
+        if (ratings.length > 0) {
+            totalRate /= ratings.length
+            ratingText = `${totalRate + "/5"}`
+        }
+        console.log(totalRate)
         let image = BASE_URL + book.cover.url;
         let item = document.createElement("li");
         item.classList.add("book-item");
@@ -61,9 +78,11 @@ function displayBooks(books) {
         </div>
         <div class="book-container-right book-container-both">
             <h4>Author: ${book.author}</h4>
-            <h4>Rating 4.5/5</h4>
+            <h4>Rating: ${ratingText}</h4>
+            <button class="saveToUser">save</button>
         </div>
         `;
         bookContainer.appendChild(item);
-    });
+    }
+
 }

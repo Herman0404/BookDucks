@@ -35,7 +35,7 @@ const login = async (user, password, form) => {
         const data = await response.json();
         console.log("Login success:", data);
 
-        localStorage.setItem("jwt", data.jwt);
+        localStorage.setItem("token", data.jwt);
         localStorage.setItem("user", data.user.username)
 
         window.location.href = "home.html";
