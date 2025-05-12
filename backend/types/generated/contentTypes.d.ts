@@ -378,7 +378,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     singularName: 'book';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     author: Schema.Attribute.String;
@@ -413,7 +413,7 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
     singularName: 'rating';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     book: Schema.Attribute.Relation<'manyToOne', 'api::book.book'>;

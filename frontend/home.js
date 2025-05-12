@@ -4,7 +4,6 @@ const BASE_URL = "http://localhost:1337";
 
 document.addEventListener("DOMContentLoaded", () => {
     isLoggedIn();
-    //document.querySelector('.logout-button').addEventListener('click', logOut);
     document.querySelector('.logout-button').addEventListener('click', () => logOut());
 });
 
@@ -42,7 +41,6 @@ async function fetchBooks() {
         }
 
         const data = await response.json();
-        console.log("Books:", data.data);
         displayBooks(data.data);
 
     } catch (error) {
