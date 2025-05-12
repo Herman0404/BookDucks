@@ -4,7 +4,7 @@
   "info": {
     "singularName": "book",
     "pluralName": "books",
-    "displayName": "Book",
+    "displayName": "books",
     "description": ""
   },
   "options": {
@@ -24,14 +24,21 @@
       "type": "date"
     },
     "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rating.rating",
+      "mappedBy": "book"
     }
   }
 }
