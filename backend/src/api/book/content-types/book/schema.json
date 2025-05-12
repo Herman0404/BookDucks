@@ -40,7 +40,7 @@
       "target": "api::rating.rating",
       "mappedBy": "book"
     },
-    "users_permissions_users": {
+    "users": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",

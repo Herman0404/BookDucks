@@ -397,7 +397,7 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_users: Schema.Attribute.Relation<
+    users: Schema.Attribute.Relation<
       'manyToMany',
       'plugin::users-permissions.user'
     >;

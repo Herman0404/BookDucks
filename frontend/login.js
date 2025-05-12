@@ -36,7 +36,6 @@ const login = async (user, password, form) => {
         console.log("Login success:", data);
 
         localStorage.setItem("token", data.jwt);
-        localStorage.setItem("user", data.user.username)
 
         window.location.href = "home.html";
     } catch (error) {
