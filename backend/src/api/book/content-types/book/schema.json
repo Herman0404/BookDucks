@@ -39,6 +39,10 @@
       "relation": "oneToMany",
       "target": "api::rating.rating",
       "mappedBy": "book"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
     }
   }
 }
