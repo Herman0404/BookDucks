@@ -1,8 +1,9 @@
-import { getBookRating, getUser, addBookToUser, getBookById } from "./api.js";
+import { getBookRating, getUser, addBookToUser, getBookById, getTheme } from "./api.js";
 
 const BASE_URL = "http://localhost:1337";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    await getTheme();
     isLoggedIn();
     document.querySelector('.logout-button').addEventListener('click', () => logOut());
 });
@@ -41,7 +42,7 @@ async function fetchBooks() {
         }
 
         const data = await response.json();
-        displayBooks(data.data);
+        await displayBooks(data.data);
 
     } catch (error) {
         console.error("Error fetching books:", error);
@@ -53,7 +54,6 @@ async function displayBooks(books) {
     const bookContainer = document.getElementById("book-container");
     bookContainer.innerHTML = "";
     const user = await getUser();
-    console.log(user);
     for (let book of books) {
         let button = "<button class='save-to-user'>save to library</button>";
         if (book.users.some(bookUser => bookUser.id === user.id)) {

@@ -4,6 +4,12 @@
     margin: 0;
 }
 
+/* GENERAL */
+
+body {
+    background-color: #eeffff;
+}
+
 /* LOGIN */
 #login-form {
     display: flex;
@@ -56,7 +62,7 @@
     justify-content: flex-end;
     align-items: center;
     gap: 20px;
-    background-color: aliceblue;
+    background-color: #dfffff;
     box-sizing: border-box;
 }
 
@@ -65,15 +71,18 @@
     font-size: 24px;
 }
 
-.logout-button {
+.log-button {
     background-color: #FF9800;
-    font-size: 16px;
+    font-size: 18px;
+    min-width: 90px;
+    min-height: 50px;
     color: white;
     border: 0;
+    border-radius: 5px;
     padding: 5px;
 }
 
-.logout-button:hover {
+.log-button:hover {
     cursor: pointer;
 }
 
@@ -81,9 +90,9 @@
     display: grid;
     width: 80%;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 30px;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 50px;
     margin-bottom: 10px;
 }
 
@@ -92,7 +101,7 @@
     grid-template-columns: repeat(2, 1fr);
     width: 80%;
     gap: 10px;
-    background-color: #006ee4;
+    background-color: #fcfcfc;
     text-align: center;
     padding: 20px;
 }
@@ -107,11 +116,9 @@
 }
 
 .book-container-left {
-    background-color: brown;
 }
 
 .book-container-right {
-    background-color: burlywood;
 }
 
 .book-title {
@@ -124,7 +131,15 @@
 }
 
 .save-to-user {
+    background-color: #FF9800;
+    color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px;
+    font-size: 12px;
+    min-width: 100px;
+    min-height: 40px;
+}
+
+.save-to-user:hover{
+    cursor: pointer;
 }

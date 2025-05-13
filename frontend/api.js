@@ -1,6 +1,28 @@
 const BASE_URL = "http://localhost:1337/api/"
 
 
+/* GET THEME API*/
+
+export async function getTheme(endpoint = "chosen-theme") {
+    const url = `${BASE_URL}${endpoint}?populate[currentTheme][populate]=*`;
+    try {
+        const res = await fetch(url);
+
+        if (!res.ok) {
+            throw new Error(`Error: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+
+        console.log("Full Populated Response:", data);
+
+        return data; // You can now use the populated data
+
+    } catch (error) {
+        console.error("Failed to fetch theme:", error);
+    }
+}
+
 /* USER API */
 
 export async function getUser(endpoint = `users/me`) {

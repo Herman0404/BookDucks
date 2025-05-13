@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "chosen_themes",
+  "info": {
+    "singularName": "chosen-theme",
+    "pluralName": "chosen-themes",
+    "displayName": "chosen theme",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "currentTheme": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::theme.theme"
+    }
+  }
+}

@@ -404,6 +404,35 @@ export interface ApiBookBook extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiChosenThemeChosenTheme extends Struct.SingleTypeSchema {
+  collectionName: 'chosen_themes';
+  info: {
+    description: '';
+    displayName: 'chosen theme';
+    pluralName: 'chosen-themes';
+    singularName: 'chosen-theme';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentTheme: Schema.Attribute.Relation<'oneToOne', 'api::theme.theme'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::chosen-theme.chosen-theme'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRatingRating extends Struct.CollectionTypeSchema {
   collectionName: 'ratings';
   info: {
@@ -442,6 +471,38 @@ export interface ApiRatingRating extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
+  };
+}
+
+export interface ApiThemeTheme extends Struct.CollectionTypeSchema {
+  collectionName: 'themes';
+  info: {
+    description: '';
+    displayName: 'theme';
+    pluralName: 'themes';
+    singularName: 'theme';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    backgroundColor: Schema.Attribute.String;
+    buttonColor: Schema.Attribute.String;
+    cardColor: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::theme.theme'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    primaryColor: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    secondaryColor: Schema.Attribute.String;
+    textColor: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -956,7 +1017,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::book.book': ApiBookBook;
+      'api::chosen-theme.chosen-theme': ApiChosenThemeChosenTheme;
       'api::rating.rating': ApiRatingRating;
+      'api::theme.theme': ApiThemeTheme;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
