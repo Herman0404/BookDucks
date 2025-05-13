@@ -115,10 +115,16 @@
 }
 
 .book-title {
-    width: 85%;
+    font-weight: 600;
 }
 
 .book-cover {
     max-width: 200px;
     max-height: 400px;
+}
+
+.save-to-user {
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
 }

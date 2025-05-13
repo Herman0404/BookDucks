@@ -1,4 +1,4 @@
-import { getBookRating, getUser, addBookToUser, getBook } from "./api.js";
+import { getBookRating, getUser, addBookToUser, getBookById } from "./api.js";
 
 const BASE_URL = "http://localhost:1337";
 
@@ -52,10 +52,18 @@ async function fetchBooks() {
 async function displayBooks(books) {
     const bookContainer = document.getElementById("book-container");
     bookContainer.innerHTML = "";
-
+    const user = await getUser();
+    console.log(user);
     for (let book of books) {
+        let button = "<button class='save-to-user'>save to library</button>";
+        if (book.users.some(bookUser => bookUser.id === user.id)) {
+            button = "<button class='save-to-user'>In library</button>"
+        } else {
+            console.log("nej")
+        }
         let totalRate = 0;
         let ratingText = "No ratings"
+
         const ratings = await getBookRating(book.documentId);
 
         for (let rating of ratings) {
@@ -72,17 +80,21 @@ async function displayBooks(books) {
         item.classList.add("book-item");
         item.innerHTML = `
         <div class="book-container-left book-container-both">
-            <h3 class="book-title">${book.title}</h3>
+            
             <img src="${image}" alt="${image}" class="book-cover">
         </div>
         <div class="book-container-right book-container-both">
+            <h3 class="book-title">${book.title}</h3>
             <h4>Author: ${book.author}</h4>
             <h4>Rating: ${ratingText}</h4>
-            <button class="save-to-user">save</button>
+            ${button}
         </div>
         `;
         const saveButton = item.querySelector('.save-to-user');
-        saveButton.addEventListener('click', () => addBookToUser(book.documentId));
+        saveButton.addEventListener('click', async () => {
+            await addBookToUser(book.documentId);
+            await fetchBooks();
+        });
         bookContainer.appendChild(item);
     }
 }
