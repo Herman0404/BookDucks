@@ -1,31 +1,55 @@
-const BASE_URL = "http://localhost:1337/api/"
+export const BASE_URL = "http://localhost:1337/api"
 
+
+/* GENERAL API/NONAPI*/
+
+export async function usernameDisplay() {
+    const user = await getUser();
+    console.log(user)
+}
+
+export async function isLoggedIn() {
+    var token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please log in before accessing the site");
+        window.location.href = "login.html";
+    } else if (token) {
+        try {
+            var user = await getUser();
+            document.querySelector('.username-label').textContent = user.username;
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+    }
+}
 
 /* GET THEME API*/
 
-export async function getTheme(endpoint = "chosen-theme") {
+export async function getTheme(endpoint = "/chosen-theme") {
     const url = `${BASE_URL}${endpoint}?populate[currentTheme][populate]=*`;
     try {
         const res = await fetch(url);
-
-        if (!res.ok) {
-            throw new Error(`Error: ${res.statusText}`);
-        }
-
         const data = await res.json();
-
-        console.log("Full Populated Response:", data);
-
-        return data; // You can now use the populated data
-
+        applyTheme(data.data.currentTheme);
+        return data;
     } catch (error) {
-        console.error("Failed to fetch theme:", error);
+        console.error("Fetch fail:", error);
     }
+}
+
+function applyTheme(theme) {
+    document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
+    document.documentElement.style.setProperty('--secondary-color', theme.secondaryColor);
+    document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
+    document.documentElement.style.setProperty('--text-color', theme.textColor);
+    document.documentElement.style.setProperty('--button-color', theme.buttonColor);
+    document.documentElement.style.setProperty('--card-color', theme.cardColor);
+    document.documentElement.style.setProperty('--button-text-color', theme.buttonText);
 }
 
 /* USER API */
 
-export async function getUser(endpoint = `users/me`) {
+export async function getUser(endpoint = `/users/me`) {
     const url = `${BASE_URL}${endpoint}`;
     const token = localStorage.getItem("token");
     const res = await fetch(`${url}`, {
@@ -41,7 +65,7 @@ export async function getUser(endpoint = `users/me`) {
 
 async function getUserBooks() {
     const id = await getUser();
-    const endpoint = `users/${id.id}?populate=books`
+    const endpoint = `/users/${id.id}?populate=books`
     const url = `${BASE_URL}${endpoint}`;
     const token = localStorage.getItem("token");
     const res = await fetch(url, {
@@ -51,34 +75,27 @@ async function getUserBooks() {
             "Authorization": `Bearer ${token}`,
         }
     });
-
-    if (!res.ok) {
-        console.error('Error fetching user:', res.statusText);
-        throw new Error('Failed to fetch the user');
-    }
-
     const data = await res.json();
     return data;
 }
 
 /* BOOK API */
 
-export async function fetchBooks(endpoint = `books/`) {
-
-}
-
-export async function getBookById(id, endpoint = `books/${id}`) {
+export async function fetchBooks(endpoint = `/books/?populate=*`) {
     const url = `${BASE_URL}${endpoint}`;
     const res = await fetch(url);
-    if (!res.ok) {
-        console.error('Error fetching book:', res.statusText);
-        throw new Error('Failed to fetch the book');
-    }
     const data = await res.json();
     return data.data;
 }
 
-export async function getBookRating(id, endpoint = `books/${id}?populate=ratings`) {
+export async function getBookById(id, endpoint = `/books/${id}`) {
+    const url = `${BASE_URL}${endpoint}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.data;
+}
+
+export async function getBookRating(id, endpoint = `/books/${id}?populate=ratings`) {
     const url = `${BASE_URL}${endpoint}`;
     const res = await fetch(`${url}`);
     const data = await res.json();
@@ -87,7 +104,7 @@ export async function getBookRating(id, endpoint = `books/${id}?populate=ratings
     return ratings;
 }
 
-export async function addBookToUser(bookId, endpoint = `users/`) {
+export async function addBookToUser(bookId, endpoint = `/users/`) {
     const user = await getUserBooks();
     const book = await getBookById(bookId)
     const url = `${BASE_URL}${endpoint}${user.id}?populate=books`;

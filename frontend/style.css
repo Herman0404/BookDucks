@@ -4,10 +4,28 @@
     margin: 0;
 }
 
+/* THEME */
+
+:root {
+    --primary-color: #000000;
+    --secondary-color: #000000;
+    --background-color: #000000;
+    --text-color: #000000;
+    --button-color: #000000;
+    --button-text-color: #000000;
+    --card-color: #000000;
+}
+
 /* GENERAL */
 
 body {
-    background-color: #eeffff;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+button {
+    background-color: var(--button-color);
+    color: var(--button-text-color);
 }
 
 /* LOGIN */
@@ -16,7 +34,6 @@ body {
     flex-direction: column;
     gap: 15px;
     margin: auto;
-    background-color: rgb(230, 230, 230);
     max-height: 400px;
     min-height: 300px;
     max-width: 400px;
@@ -37,46 +54,65 @@ body {
     width: 50%;
     max-height: 40px;
     min-height: 30px;
-    color: white;
     align-self: center;
     border: none;
-    background-color: #007BFF;
     border-radius: 10px;
     transition: transform 0.3s ease;
 }
 
 #login-button:hover {
     cursor: pointer;
-    background-color: #006ee4;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+/* GUEST EXCLUSIVE */
+
+#login-main {
+    display: flex;
+    flex-direction: column;
+}
+
+#guest-button {
+    min-width: 150px;
+    max-height: 50px;
+    min-height: 40px;
+    align-self: center;
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+#guest-button:hover {
+    cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transform: scale(1.02);
 }
 
 /* HOME */
 
-#logout-button-div {
+#header-div {
     display: flex;
+    background-color: var(--primary-color);
     width: 100%;
     padding: 5px;
     margin-right: 10px;
     justify-content: flex-end;
     align-items: center;
     gap: 20px;
-    background-color: #dfffff;
     box-sizing: border-box;
 }
 
 
-#logout-button-div label {
-    font-size: 24px;
+#header-div label {
+    font-size: 18px;
+    color: var(--button-text-color);
 }
 
 .log-button {
-    background-color: #FF9800;
     font-size: 18px;
     min-width: 90px;
     min-height: 50px;
-    color: white;
     border: 0;
     border-radius: 5px;
     padding: 5px;
@@ -88,20 +124,21 @@ body {
 
 #book-container {
     display: grid;
-    width: 80%;
+    background-color: var(--primary-color);
+    width: 70%;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
-    margin: auto;
-    margin-top: 50px;
-    margin-bottom: 10px;
+    padding: 30px;
+    margin: 50px auto 10px auto;
+    box-sizing: border-box;
 }
+
 
 .book-item {
     display: grid;
+    background-color: var(--card-color);
     grid-template-columns: repeat(2, 1fr);
-    width: 80%;
     gap: 10px;
-    background-color: #fcfcfc;
     text-align: center;
     padding: 20px;
 }
@@ -115,12 +152,6 @@ body {
     padding: 10px;
 }
 
-.book-container-left {
-}
-
-.book-container-right {
-}
-
 .book-title {
     font-weight: 600;
 }
@@ -131,8 +162,6 @@ body {
 }
 
 .save-to-user {
-    background-color: #FF9800;
-    color: white;
     border: none;
     border-radius: 5px;
     font-size: 12px;

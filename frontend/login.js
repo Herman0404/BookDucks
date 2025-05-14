@@ -1,5 +1,8 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { getTheme } from "./api.js";
+
+document.addEventListener("DOMContentLoaded", async () => {
     const form = document.getElementById("login-form");
+    await getTheme();
 
     form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -13,6 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         login(user, password, form);
     });
+    document.getElementById("guest-button").addEventListener("click", () => {
+        window.location.href = "index.html";
+    })
 });
 
 const login = async (user, password, form) => {

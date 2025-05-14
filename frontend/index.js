@@ -1,33 +1,18 @@
-import { getBookRating, getUser, addBookToUser, getBookById, getTheme, isLoggedIn, fetchBooks, BASE_URL } from "./api.js";
+import { getTheme, fetchBooks, getBookRating, BASE_URL } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await getTheme();
-    await isLoggedIn();
-    await displayBooks();
-    document.querySelector('.log-button').addEventListener('click', () => logOut());
+    displayBooks();
 });
-
-function logOut() {
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-};
 
 async function displayBooks() {
     const books = await fetchBooks();
     const bookContainer = document.getElementById("book-container");
     bookContainer.innerHTML = "";
-    const user = await getUser();
     for (let book of books) {
-        let button = "<button class='save-to-user'>save to library</button>";
-        if (book.users.some(bookUser => bookUser.id === user.id)) {
-            button = "<button class='save-to-user'>In library</button>"
-            console.log(book.users)
-        }
         let totalRate = 0;
         let ratingText = "No ratings"
-
         const ratings = await getBookRating(book.documentId);
-
         for (let rating of ratings) {
             totalRate += rating.rating;
         }
@@ -38,6 +23,7 @@ async function displayBooks() {
         }
 
         let image = BASE_URL + book.cover.url;
+        console.log(image)
         let item = document.createElement("li");
         item.classList.add("book-item");
         item.innerHTML = `
@@ -51,15 +37,9 @@ async function displayBooks() {
             <h5>Released: ${book.release}</h5>
             <h5>Pages: ${book.pages}</h5>
             <h4>Rating: ${ratingText}</h4>
-            ${button}
         </div>
         `;
         const saveButton = item.querySelector('.save-to-user');
-        saveButton.addEventListener('click', async (event) => {
-            event.preventDefault();
-            await addBookToUser(book.documentId);
-            await displayBooks();
-        });
         bookContainer.appendChild(item);
     }
 }

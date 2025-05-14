@@ -31,6 +31,9 @@
     },
     "cardColor": {
       "type": "string"
+    },
+    "buttonText": {
+      "type": "string"
     }
   }
 }

@@ -13,18 +13,22 @@
 </head>
 
 <body>
-    <form id="login-form">
-        <h1>Log in</h1>
-        <div class="login-inputs">
-            <label for="username-input">Username</label>
-            <input type="text" id="username-input" required>
-        </div>
-        <div class="login-inputs">
-            <label for="password-input">Password</label>
-            <input type="password" id="password-input" required>
-        </div>
-        <button type="submit" id="login-button">Submit</button>
-    </form>
+    <main id="login-main">
+        <form id="login-form">
+            <h1>Log in</h1>
+            <div class="login-inputs">
+                <label for="username-input">Username</label>
+                <input type="text" id="username-input" required>
+            </div>
+            <div class="login-inputs">
+                <label for="password-input">Password</label>
+                <input type="password" id="password-input" required>
+            </div>
+            <button type="submit" id="login-button">Submit</button>
+        </form>
+
+        <button type="guest-redirect" id="guest-button">Home<br>(guest)</button>
+    </main>
 </body>
 
 </html>

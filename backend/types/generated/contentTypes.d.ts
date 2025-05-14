@@ -488,6 +488,7 @@ export interface ApiThemeTheme extends Struct.CollectionTypeSchema {
   attributes: {
     backgroundColor: Schema.Attribute.String;
     buttonColor: Schema.Attribute.String;
+    buttonText: Schema.Attribute.String;
     cardColor: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
