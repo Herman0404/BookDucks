@@ -13,7 +13,41 @@
 </head>
 
 <body>
+    <header>
+        <div id="header-div">
+            <button class="log-button home-button">Home</button>
+            <button class=" log-button username-label">User</button>
+            <button class="log-button log-out">Log out</button>
+        </div>
 
+    </header>
+    <div id="sorting-container">
+        <div id="rating-toggle">
+            <label>
+                <input type="radio" name="rating-toggle" id="show-all" value="all" checked>
+                All
+            </label>
+            <label>
+                <input type="radio" name="rating-toggle" id="show-rated" value="rated">
+                Only rated books
+            </label>
+        </div>
+        <div id="sorting-options">
+            <label>
+                <input type="radio" name="sort-option" value="title" checked> Sort by Title
+            </label>
+            <label>
+                <input type="radio" name="sort-option" value="author"> Sort by Author
+            </label>
+            <label>
+                <input type="radio" name="sort-option" value="rating"> Sort by Rating (Average)
+            </label>
+            <label>
+                <input type="radio" name="sort-option" value="user-rating"> Sort by Your Rating
+            </label>
+        </div>
+    </div>
+    <ul id="book-container"></ul>
 </body>
 
 </html>

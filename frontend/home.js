@@ -1,16 +1,10 @@
-import { getBookRating, getUser, addBookToUser, getBookById, getTheme, isLoggedIn, fetchBooks, BASE_URL } from "./api.js";
+import { getBookRating, getUser, addBookToUser, getTheme, isLoggedIn, fetchBooks, BASE_URL } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     await getTheme();
     await isLoggedIn();
     await displayBooks();
-    document.querySelector('.log-button').addEventListener('click', () => logOut());
 });
-
-function logOut() {
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
-};
 
 async function displayBooks() {
     const books = await fetchBooks();
@@ -18,10 +12,9 @@ async function displayBooks() {
     bookContainer.innerHTML = "";
     const user = await getUser();
     for (let book of books) {
-        let button = "<button class='save-to-user'>save to library</button>";
+        let button = "<button class='card-button save-to-user'>save to library</button>";
         if (book.users.some(bookUser => bookUser.id === user.id)) {
-            button = "<button class='save-to-user'>In library</button>"
-            console.log(book.users)
+            button = "<button class='card-button save-to-user'>In library</button>"
         }
         let totalRate = 0;
         let ratingText = "No ratings"
@@ -55,10 +48,10 @@ async function displayBooks() {
         </div>
         `;
         const saveButton = item.querySelector('.save-to-user');
-        saveButton.addEventListener('click', async (event) => {
-            event.preventDefault();
+        saveButton.addEventListener('click', async (e) => {
+            e.preventDefault();
             await addBookToUser(book.documentId);
-            await displayBooks();
+            saveButton.innerHTML = "In library"
         });
         bookContainer.appendChild(item);
     }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js"
+        integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="module" src="register.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="reglog-main">
+        <form class="login-form">
+            <h1>Register</h1>
+            <div class="login-inputs">
+                <label for="username-register">Email</label>
+                <input type="email" id="email-register" required>
+            </div>
+            <div class="login-inputs">
+                <label for="username-register">Username</label>
+                <input type="text" id="username-register" required>
+            </div>
+            <div class="login-inputs">
+                <label for="password-register">Password</label>
+                <input type="password" id="password-register" required>
+            </div>
+            <button type="submit" class="login-buttons submit">Register</button>
+        </form>
+        <div class="redirect-buttons">
+            <button id="login-redirect" class="login-buttons">Log in</button>
+            <button id="guest-redirect-register" class="login-buttons">Home (guest)</button>
+        </div>
+    </main>
+</body>
+
+</html>

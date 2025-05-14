@@ -1,10 +1,12 @@
-import { getTheme } from "./api.js";
+import { getTheme, loginUser } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const form = document.getElementById("login-form");
+    const form = document.querySelector(".login-form");
+    const guestRedirect = document.getElementById("guest-redirect-login");
+    const registerRedirect = document.getElementById("register-redirect");
     await getTheme();
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         let user = document.getElementById("username-input").value.trim();
@@ -14,39 +16,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert("Please fill in both fields.");
             return;
         }
-        login(user, password, form);
+        await loginUser(user, password, form);
     });
-    document.getElementById("guest-button").addEventListener("click", () => {
+    guestRedirect.addEventListener("click", () => {
         window.location.href = "index.html";
     })
+    registerRedirect.addEventListener("click", () => {
+        window.location.href = "register.html";
+    })
 });
-
-const login = async (user, password, form) => {
-    try {
-        const response = await fetch("http://localhost:1337/api/auth/local", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                identifier: user,
-                password: password
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error("Login failed", error);
-        }
-
-        const data = await response.json();
-        console.log("Login success:", data);
-
-        localStorage.setItem("token", data.jwt);
-
-        window.location.href = "home.html";
-    } catch (error) {
-        form.reset();
-        alert("Wrong username/password");
-        console.error("Error during login:", error);
-    }
-};

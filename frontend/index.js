@@ -1,7 +1,15 @@
 import { getTheme, fetchBooks, getBookRating, BASE_URL } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const loginRedirect = document.querySelector(".login-redirect");
+    const isLoggedIn = localStorage.getItem("token");
+    if (isLoggedIn) {
+        window.location.href = "home.html"
+    }
     await getTheme();
+    loginRedirect.addEventListener("click", () => {
+        window.location.href = "login.html"
+    })
     displayBooks();
 });
 
@@ -23,7 +31,6 @@ async function displayBooks() {
         }
 
         let image = BASE_URL + book.cover.url;
-        console.log(image)
         let item = document.createElement("li");
         item.classList.add("book-item");
         item.innerHTML = `
@@ -39,7 +46,6 @@ async function displayBooks() {
             <h4>Rating: ${ratingText}</h4>
         </div>
         `;
-        const saveButton = item.querySelector('.save-to-user');
         bookContainer.appendChild(item);
     }
 }

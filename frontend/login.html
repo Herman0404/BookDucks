@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Log in</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js"
         integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -13,8 +13,8 @@
 </head>
 
 <body>
-    <main id="login-main">
-        <form id="login-form">
+    <main class="reglog-main">
+        <form class="login-form">
             <h1>Log in</h1>
             <div class="login-inputs">
                 <label for="username-input">Username</label>
@@ -24,10 +24,12 @@
                 <label for="password-input">Password</label>
                 <input type="password" id="password-input" required>
             </div>
-            <button type="submit" id="login-button">Submit</button>
+            <button type="submit" class="login-buttons submit">Log in</button>
         </form>
-
-        <button type="guest-redirect" id="guest-button">Home<br>(guest)</button>
+        <div class="redirect-buttons">
+            <button type="register" id="register-redirect" class="login-buttons">Register</button>
+            <button type="guest-redirect" id="guest-redirect-login" class="login-buttons">Home (guest)</button>
+        </div>
     </main>
 </body>
 
