@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     displayBooks();
 });
 
+// Utskrift av böcker för "guest"
 async function displayBooks() {
     const books = await fetchBooks();
     const bookContainer = document.getElementById("book-container");

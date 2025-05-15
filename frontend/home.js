@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await displayBooks();
 });
 
+// Utskrift av böcker
 async function displayBooks() {
     const books = await fetchBooks();
     const bookContainer = document.getElementById("book-container");
@@ -47,6 +48,7 @@ async function displayBooks() {
             ${button}
         </div>
         `;
+        // Spara böcker till användare
         const saveButton = item.querySelector('.save-to-user');
         saveButton.addEventListener('click', async (e) => {
             e.preventDefault();

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const form = document.querySelector(".login-form");
     const guestRedirect = document.getElementById("guest-redirect-register");
     const loginRedirect = document.getElementById("login-redirect");
+    // Skapa nytt konto
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         let email = document.getElementById("email-register").value.trim();
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         await registerUser(email, user, password);
         document.getElementById("password-register").value = "";
     })
+
+    // Redirects (guest och login)
 
     guestRedirect.addEventListener("click", () => {
         window.location.href = "index.html";

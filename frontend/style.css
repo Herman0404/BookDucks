@@ -28,6 +28,11 @@ button {
     color: var(--button-text-color);
 }
 
+.site-title {
+    text-align: center;
+    padding: 5px;
+}
+
 /* LOGIN */
 .login-form {
     display: flex;

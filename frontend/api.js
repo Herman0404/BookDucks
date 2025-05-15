@@ -37,7 +37,7 @@ export async function isLoggedIn() {
 }
 
 export function getBookRatingAvg(bookRatings) {
-    let ratingText = "no ratings"
+    let ratingText = "No ratings"
     let totalRate = 0;
     for (let rating of bookRatings) {
         totalRate += rating.rating;

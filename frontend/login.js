@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const registerRedirect = document.getElementById("register-redirect");
     await getTheme();
 
+    // Login
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -18,6 +19,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         await loginUser(user, password, form);
     });
+
+    // Redirects (guest och register)
+
     guestRedirect.addEventListener("click", () => {
         window.location.href = "index.html";
     })

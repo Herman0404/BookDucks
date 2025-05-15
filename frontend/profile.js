@@ -1,5 +1,6 @@
 import { getTheme, isLoggedIn, getUserBooks, getBookRating, getBookRatingAvg, getUserRating, BASE_URL, removeBookFromUser, updateUserRating, addUserRating } from "./api.js";
 
+// Global variabel för sorting (dåligt men lite stress haha)
 let currentSort = 'title';
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -14,6 +15,7 @@ async function displayBooks(books) {
     const ratings = res.ratings;
     const bookContainer = document.getElementById("book-container");
     bookContainer.innerHTML = "";
+    // Utskrift av användares böcker
     if (books && books.length > 0) {
         for (let book of books) {
             const matchingRating = ratings.find(rating => rating.book?.id === book.id);
@@ -26,7 +28,10 @@ async function displayBooks(books) {
             let giveRatingButton = "<button class='card-button give-rating'>rate</button>";
 
             const bookRatings = await getBookRating(book.documentId);
-            let ratingText = getBookRatingAvg(bookRatings);
+            let ratingAvg = getBookRatingAvg(bookRatings);
+            if (ratingAvg != "No ratings") {
+                ratingAvg = `${ratingAvg}/5`
+            }
 
             let image = BASE_URL + book.cover.url;
             let item = document.createElement("li");
@@ -49,7 +54,7 @@ async function displayBooks(books) {
             <h4>Author: ${book.author}</h4>
             <h5>Released: ${book.release}</h5>
             <h5>Pages: ${book.pages}</h5>
-            <h4 id="book-rating-${book.id}">Rating: ${ratingText}/5</h4>
+            <h4 id="book-rating-${book.id}">Rating: ${ratingAvg}</h4>
             <h4>Your rating: <span id="user-rating-text-${book.id}">${userRatingText}</span></h4>
             
             ${button}
@@ -61,6 +66,7 @@ async function displayBooks(books) {
             const removeButton = item.querySelector('.remove-from-user');
             const rateButton = item.querySelector('.give-rating');
 
+            // Tar bort bok från användare
             removeButton.addEventListener('click', async (e) => {
                 e.preventDefault();
                 if (confirm(`Do you want to remove ${book.title} from your reading list?`)) {
@@ -72,10 +78,12 @@ async function displayBooks(books) {
                 }
             });
 
+            // eventlistener för att "rate" en bok
             rateButton.addEventListener('click', async (e) => {
                 e.preventDefault();
 
                 const chosenRating = Number(document.getElementById(`user-rating-${book.id}`).value);
+                // Kollar så att värdet fungerar
                 if (
                     chosenRating &&
                     Number.isInteger(chosenRating) &&
@@ -89,7 +97,7 @@ async function displayBooks(books) {
                             res = await getUserRating();
                             const ratings = res.ratings;
                             const matchingRating = ratings.find(rating => rating.book?.id === book.id);
-
+                            // Kollar om rating ska uppdateras eller läggas till
                             if (matchingRating) {
                                 await updateUserRating(chosenRating, matchingRating.documentId);
                             } else {
@@ -110,14 +118,14 @@ async function displayBooks(books) {
             });
 
         }
-
+        // Användare har inga böcker
     } else {
         bookContainer.innerHTML = "Empty, you can add books on the homepage!"
-        console.log("test")
     }
 
 }
 
+// Eventlisteners för sorteringsknappar
 function sortListeners() {
     document.querySelectorAll('input[name="sort-option"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
@@ -129,11 +137,12 @@ function sortListeners() {
     document.querySelectorAll('input[name="rating-toggle"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
             sortBooks(currentSort);
+            console.log("test")
         });
     });
 }
 
-
+// Sorterar böcker
 async function sortBooks(sort = currentSort) {
     const res = await getUserBooks();
     let books = res.books;
@@ -141,8 +150,16 @@ async function sortBooks(sort = currentSort) {
     const ratingRes = await getUserRating();
     const userRatings = ratingRes.ratings;
 
-    let sortedBooks;
+    const showRated = document.getElementById('show-rated').checked;
 
+    if (showRated) {
+        books = books.filter(book =>
+            userRatings.some(rating => rating.book?.id === book.id)
+        );
+    }
+
+    let sortedBooks;
+    // Sortering för title, author, rating och user-rating
     if (sort === 'title') {
         sortedBooks = [...books].sort((a, b) => a.title.localeCompare(b.title));
     } else if (sort === 'author') {
@@ -158,6 +175,7 @@ async function sortBooks(sort = currentSort) {
             const userRatingA = userRatings.find(rating => rating.book?.id === a.id);
             const userRatingB = userRatings.find(rating => rating.book?.id === b.id);
 
+            // Kollar om värden finns, om odefinerad ge 0
             const ratingA = userRatingA ? userRatingA.rating : 0;
             const ratingB = userRatingB ? userRatingB.rating : 0;
 
