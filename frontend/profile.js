@@ -137,7 +137,6 @@ function sortListeners() {
     document.querySelectorAll('input[name="rating-toggle"]').forEach(radio => {
         radio.addEventListener('change', (e) => {
             sortBooks(currentSort);
-            console.log("test")
         });
     });
 }

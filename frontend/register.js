@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         let email = document.getElementById("email-register").value.trim();
         let user = document.getElementById("username-register").value.trim();
         let password = document.getElementById("password-register").value.trim();
-        console.log(email, user, password);
         await registerUser(email, user, password);
         document.getElementById("password-register").value = "";
     })
